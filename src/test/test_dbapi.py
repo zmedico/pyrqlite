@@ -85,6 +85,7 @@ class ModuleTests(unittest.TestCase):
                                    sqlite.DatabaseError),
                         "NotSupportedError is not a subclass of DatabaseError")
 
+@unittest.skip('pyrqlite does not support :memory:')
 class ConnectionTests(unittest.TestCase):
     def setUp(self):
         self.cx = sqlite.connect(":memory:")
@@ -142,6 +143,7 @@ class ConnectionTests(unittest.TestCase):
         self.assertEqual(self.cx.ProgrammingError, sqlite.ProgrammingError)
         self.assertEqual(self.cx.NotSupportedError, sqlite.NotSupportedError)
 
+@unittest.skip('pyrqlite does not support :memory:')
 class CursorTests(unittest.TestCase):
     def setUp(self):
         self.cx = sqlite.connect(":memory:")
@@ -476,6 +478,7 @@ class CursorTests(unittest.TestCase):
         except TypeError:
             pass
 
+@unittest.skip('pyrqlite does not support :memory:')
 @unittest.skipUnless(threading, 'This test requires threading.')
 class ThreadTests(unittest.TestCase):
     def setUp(self):
@@ -657,6 +660,7 @@ class ConstructorTests(unittest.TestCase):
         with test_support.check_py3k_warnings():
             b = sqlite.Binary(chr(0) + "'")
 
+@unittest.skip('pyrqlite does not support :memory:')
 class ExtensionTests(unittest.TestCase):
     def test_CheckScriptStringSql(self):
         con = sqlite.connect(":memory:")
@@ -724,6 +728,7 @@ class ExtensionTests(unittest.TestCase):
         result = con.execute("select foo from test").fetchone()[0]
         self.assertEqual(result, 5, "Basic test of Connection.executescript")
 
+@unittest.skip('pyrqlite does not support :memory:')
 class ClosedConTests(unittest.TestCase):
     def setUp(self):
         pass
@@ -842,6 +847,7 @@ class ClosedConTests(unittest.TestCase):
         except:
             self.fail("Should have raised a ProgrammingError")
 
+@unittest.skip('pyrqlite does not support :memory:')
 class ClosedCurTests(unittest.TestCase):
     def setUp(self):
         pass
