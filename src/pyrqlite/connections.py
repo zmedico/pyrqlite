@@ -25,7 +25,12 @@ class Connection(object):
 
     def __init__(self, host='localhost', port=4001, connect_timeout=None,
                  detect_types=0, max_redirects=UNLIMITED_REDIRECTS):
-
+        if host == ':memory:':  # See: https://docs.python.org/2/library/sqlite3.html#sqlite3.connect
+            logging.warning('Host ":memory:" being emulated via "localhost"')
+            host = 'localhost'
+        elif host == '':    # See: https://sqlite.org/inmemorydb.html
+            logging.warning('Host temporary is being emulated via "localhost"')
+            host = 'localhost'
         self.messages = []
         self.host = host
         self.port = port
