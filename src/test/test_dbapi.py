@@ -728,7 +728,7 @@ class ExtensionTests(unittest.TestCase):
         result = con.execute("select foo from test").fetchone()[0]
         self.assertEqual(result, 5, "Basic test of Connection.executescript")
 
-@unittest.skip('pyrqlite does not support :memory:')
+
 class ClosedConTests(unittest.TestCase):
     def setUp(self):
         pass
@@ -847,7 +847,7 @@ class ClosedConTests(unittest.TestCase):
         except:
             self.fail("Should have raised a ProgrammingError")
 
-@unittest.skip('pyrqlite does not support :memory:')
+
 class ClosedCurTests(unittest.TestCase):
     def setUp(self):
         pass
