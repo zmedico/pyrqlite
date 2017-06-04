@@ -24,7 +24,7 @@
 import datetime
 import sys
 import unittest
-import pyrqlite.dbapi2 as sqlite
+import sqlite3.dbapi2 as sqlite
 try:
     import zlib
 except ImportError:
@@ -34,7 +34,7 @@ except ImportError:
 class SqliteTypeTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.con = sqlite.connect()
+        cls.con = sqlite.connect(":memory:")
         cls.cur = cls.con.cursor()
         if cls.cur.execute("pragma table_info(test)").fetchall():
             cls.cur.execute("drop table test")
@@ -155,7 +155,7 @@ class DeclTypesTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.con = sqlite.connect(detect_types=sqlite.PARSE_DECLTYPES)
+        cls.con = sqlite.connect(":memory:", detect_types=sqlite.PARSE_DECLTYPES)
         cls.cur = cls.con.cursor()
         if cls.cur.execute("pragma table_info(test)").fetchall():
             cls.cur.execute("drop table test")
@@ -285,9 +285,10 @@ class DeclTypesTests(unittest.TestCase):
         self.assertEqual(type(value), float)
 
 class ColNamesTests(unittest.TestCase):
+
     @classmethod
     def setUpClass(cls):
-        cls.con = sqlite.connect(detect_types=sqlite.PARSE_COLNAMES)
+        cls.con = sqlite.connect(":memory:", detect_types=sqlite.PARSE_COLNAMES)
         cls.cur = cls.con.cursor()
         if cls.cur.execute("pragma table_info(test)").fetchall():
             cls.cur.execute("drop table test")
@@ -362,7 +363,7 @@ class CommonTableExpressionTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.con = sqlite.connect()
+        cls.con = sqlite.connect(":memory:")
         cls.cur = cls.con.cursor()
         if cls.cur.execute("pragma table_info(test)").fetchall():
             cls.cur.execute("drop table test")
@@ -408,10 +409,11 @@ class ObjectAdaptationTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.con = sqlite.connect()
+        cls.con = sqlite.connect(":memory:")
         cls.cur = cls.con.cursor()
         if cls.cur.execute("pragma table_info(test)").fetchall():
             cls.cur.execute("drop table test")
+
         try:
             del sqlite.adapters[int]
         except:
@@ -437,7 +439,7 @@ class BinaryConverterTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.con = sqlite.connect(detect_types=sqlite.PARSE_COLNAMES)
+        cls.con = sqlite.connect(":memory:", detect_types=sqlite.PARSE_COLNAMES)
         if cls.con.execute("pragma table_info(test)").fetchall():
             cls.con.execute("drop table test")
         sqlite.register_converter("bin", BinaryConverterTests.convert)
@@ -456,7 +458,7 @@ class BinaryConverterTests(unittest.TestCase):
 class DateTimeTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.con = sqlite.connect(detect_types=sqlite.PARSE_DECLTYPES)
+        cls.con = sqlite.connect(":memory:", detect_types=sqlite.PARSE_DECLTYPES)
         cls.cur = cls.con.cursor()
         if cls.cur.execute("pragma table_info(test)").fetchall():
             cls.cur.execute("drop table test")
