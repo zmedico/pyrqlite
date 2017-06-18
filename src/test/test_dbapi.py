@@ -29,8 +29,16 @@ try:
 except ImportError:
     from test import test_support
 import unittest
+<<<<<<< HEAD
 
 import pyrqlite.dbapi2 as sqlite
+=======
+try:
+    import threading
+except ImportError:
+    threading = None
+import sqlite3.dbapi2 as sqlite
+>>>>>>> test_dbapi: test behavior of sqlite3
 
 if sys.version_info[0] >= 3:
     StandardError = Exception
